@@ -19,24 +19,38 @@ router.get("/:id?", async (req, res, next) => {
 
 router.post("/", async (req, res) => {
   try {
-      const userId = parseInt(req.body.userid)
+    const userId = parseInt(req.body.userid);
     const content = req.body.content;
 
-    let dbRes = await db.chirpr.post(userId, content)
-    res.send(dbRes)
+    let dbRes = await db.chirpr.post(userId, content);
+    res.send(dbRes);
   } catch (error) {
     console.error(error);
   }
 });
 
-// router.put("/:id", (req, res) => {
-//   let id = req.params.id;
-//   res.send(await db.chirpr.put(id, req.body));
-// });
+router.put("/:id", async (req, res) => {
+  try {
+    const chirpid = req.params.id;
+    const content = req.body.content;
 
-// router.delete("/:id", (req, res) => {
-//   let id = req.params.id;
-//   res.send(await db.chirpr.delete(id));
-// });
+    let dbRes = await db.chirpr.put(content, chirpid);
+    res.send(dbRes);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    let chirpid = req.params.id;
+    const content = req.body.content;
+
+    let dbRes = await db.chirpr.destroy(chirpid);
+    res.send(dbRes);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 export default router;
